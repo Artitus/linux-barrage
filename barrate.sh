@@ -1,0 +1,2 @@
+source ./__config.sh
+
