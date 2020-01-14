@@ -24,3 +24,15 @@ do
         cp ./data/firefox/user.js /home/$u/.mozilla/firefox/$p/user.js
     done
 done
+
+# Set global prefs for firefox
+
+
+# TODO Locked user.js ???
+
+# TODO If Debian
+# FIXME Not debian-locked.js
+
+cp ./data/firefox/systemwide_user.js /etc/firefox-esr/firefox-esr.js
+
+# TODO If Ubuntu
