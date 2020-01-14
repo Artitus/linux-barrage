@@ -36,3 +36,6 @@ done
 cp ./data/firefox/systemwide_user.js /etc/firefox-esr/firefox-esr.js
 
 # TODO If Ubuntu
+# FIXME syspref.js or firefox.js for Ubuntu 16.04 Firefox?
+
+cp ./data/firefox/systemwide_user.js /etc/firefox/syspref.js
