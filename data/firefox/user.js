@@ -413,7 +413,7 @@ user_pref("plugins.click_to_play",				true);
 
 // PREF: Updates addons automatically
 // https://blog.mozilla.org/addons/how-to-turn-off-add-on-updates/
-user_pref("extensions.update.enabled",				true);
+user_pref("extensions.update.enabled",				false);
 
 // PREF: Enable add-on and certificate blocklists (OneCRL) from Mozilla
 // https://wiki.mozilla.org/Blocklisting
@@ -561,10 +561,10 @@ user_pref("browser.selfsupport.url",				"");
 // https://groups.google.com/d/topic/mozilla.dev.platform/nyVkCx-_sFw/discussion
 user_pref("loop.logDomains",					false);
 
-// PREF: Enable Auto Update (disabled)
+// PREF: Enable Auto Update (disabled) -- CHANGED TO ENABLED FOR CYPAT
 // NOTICE: Fully automatic updates are disabled and left to package management systems on Linux. Windows users may want to change this setting.
 // CIS 2.1.1
-//user_pref("app.update.auto",					true);
+user_pref("app.update.auto",					true);
 
 // PREF: Enforce checking for Firefox updates
 // http://kb.mozillazine.org/App.update.enabled
@@ -721,7 +721,7 @@ user_pref("network.http.referer.spoofSource",			true);
 // http://kb.mozillazine.org/Network.cookie.cookieBehavior#1
 // NOTICE: Blocking 3rd-party cookies breaks a number of payment gateways
 // CIS 2.5.1
-user_pref("network.cookie.cookieBehavior",			1);
+user_pref("network.cookie.cookieBehavior",			2);
 
 // PREF: Enable first-party isolation
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1299996

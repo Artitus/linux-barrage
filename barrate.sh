@@ -8,3 +8,5 @@ touch ./log/firefox-error
 touch ./log/user-list
 touch ./log/users
 touch ./log/users-error
+
+# LOOKUP require password every time for sudo

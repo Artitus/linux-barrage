@@ -10,7 +10,7 @@
 
 # echo $PROFPATH
 
-## FIXME REMOVE AFTER USER SCRIPT IS COMPLETE
+## FIX REMOVE AFTER USER SCRIPT IS COMPLETE
 cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 > ./log/user-list
 
 # Iterate through all users
@@ -31,11 +31,9 @@ done
 # TODO Locked user.js ???
 
 # TODO If Debian
-# FIXME Not debian-locked.js
 
-cp ./data/firefox/systemwide_user.js /etc/firefox-esr/firefox-esr.js
+cp ./data/firefox/debiabn_locked.js /etc/firefox-esr/firefox-esr.js
 
 # TODO If Ubuntu
-# FIXME syspref.js or firefox.js for Ubuntu 16.04 Firefox?
 
-cp ./data/firefox/systemwide_user.js /etc/firefox/syspref.js
+cp ./data/firefox/locked_user.js /etc/firefox/syspref.js
