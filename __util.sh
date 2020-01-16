@@ -18,3 +18,14 @@ del() {
     cp -r --parents $1 ./backup/
     rm -rf $1
 }
+
+### Code Snippits
+
+## Distribution if/elif/else
+# if [ $Distribution = "debian" ]; then
+   
+# elif [ $Distribution = "ubuntu" ]; then
+    
+# else
+#     error firefox "CONFIG_ERROR: distribution value invalid"
+# fi
