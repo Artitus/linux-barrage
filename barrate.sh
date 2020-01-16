@@ -7,13 +7,16 @@ source ./__util.sh
 touch ./log/master
 touch ./log/firefox
 touch ./log/firefox-error
-touch ./log/user-list
 touch ./log/user
+touch ./log/user-list
 touch ./log/user-error
+touch ./log/update
+touch ./log/update-error
 
-# LOOKUP require password every time for sudo
+# LOOKUP is there a setting to require password every time for sudo?
 
 order=(
+    update.sh
     user.sh
     firefox.sh
 )
