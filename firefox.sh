@@ -15,10 +15,10 @@ do
 done
 
 # Set global prefs for firefox
-if [ $distribution = "debian" ]; then
+if [ $Distribution = "debian" ]; then
     cp ./data/firefox/debiabn_locked.js /etc/firefox-esr/firefox-esr.js
     log firefox "SUCCESS: Global prefs set"
-elif [ $distribution = "ubuntu" ]; then
+elif [ $Distribution = "ubuntu" ]; then
     cp ./data/firefox/locked_user.js /etc/firefox/syspref.js
     log firefox "SUCCESS: Global prefs set"
 else
