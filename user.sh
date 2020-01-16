@@ -8,7 +8,6 @@ cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 >> ./log/user-list
 
 
 # Disallow guest
-
 if [ $Distribution = "debian" ]; then
     # Check if lightdm dir exists
     if [ -d "/etc/lightdm/" ]; then
@@ -18,31 +17,31 @@ if [ $Distribution = "debian" ]; then
         log user "INFO: /etc/lightdm/ did not eixst"
     fi
     if [ -d "/etc/lightdm/lightdm.conf.d/"]; then
-        rm -rf /etc/lightdm/lightdm.conf.d/
+        del "/etc/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
     else
         log user "INFO: /etc/lightdm/lightdm.conf.d/ did not eixst"
     fi
     if [ -d "/usr/share/lightdm/lightdm.conf.d/"]; then
-        rm -rf /usr/share/lightdm/lightdm.conf.d/
+        del "/usr/share/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
     else
         log user "INFO: /usr/share/lightdm/ did not eixst"
     fi
-    # Restart LightDM 
+    # Restart LightDM
     # LOOKUP Any way to do this without the script exiting? The settings take effect upon reboot anyway...
 elif [ $Distribution = "ubuntu" ]; then
     cp -f ./data/user/lightdm.conf /etc/lightdm/
     log user "SUCCESS: Copied custom lightdm configuration"
     if [ -d "/etc/lightdm/lightdm.conf.d/"]; then
-        rm -rf /etc/lightdm/lightdm.conf.d/
+        del "/etc/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
     fi
     if [ -d "/usr/share/lightdm/lightdm.conf.d/"]; then
-        rm -rf /usr/share/lightdm/lightdm.conf.d/
+        del "/usr/share/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
     fi
-    # Restart LightDM ## See above    
+    # Restart LightDM ## See above
 else
     error user "CONFIG_ERROR: distribution value invalid"
 fi
