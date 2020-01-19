@@ -31,6 +31,8 @@ if [ $Distribution = "debian" ]; then
     # Restart LightDM
     # LOOKUP Any way to do this without the script exiting? The settings take effect upon reboot anyway...
 elif [ $Distribution = "ubuntu" ]; then
+    # FIX Why don't I have a gui...
+
     cp -f ./data/user/lightdm.conf /etc/lightdm/
     log user "SUCCESS: Copied custom lightdm configuration"
     if [ -d "/etc/lightdm/lightdm.conf.d/"]; then
@@ -68,3 +70,12 @@ do
     passwd --expire $u
     log user "SUCCESS: $u password required to be changed at next login"
 done
+
+# Harden sudoers
+if [ $Distribution = "debian" ]; then
+    visudo -q -c -s -f ./data/user/debian-sudoers
+elif [ $Distribution = "ubuntu" ]; then
+    visudo -q -c -s -f ./data/user/ubuntu-sudoers
+else
+    error firefox "CONFIG_ERROR: distribution value invalid"
+fi

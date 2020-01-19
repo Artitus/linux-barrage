@@ -1,0 +1,4 @@
+# TODO fill this out
+
+Defaults    timestamp_timeout=0
+Defaults    logfile=/var/log/sudo

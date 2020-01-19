@@ -15,6 +15,8 @@ touch ./log/update-error
 
 # LOOKUP is there a setting to require password every time for sudo?
 
+# LOOKUP http://docs.hardentheworld.org/
+
 order=(
     update.sh
     user.sh
@@ -25,3 +27,10 @@ for module in "${order[@]}"
 do
     . $module
 done
+
+
+#
+# * Test out tmuxinator for running scripts in paralell because that would be cool as fuck
+# ** https://github.com/tmuxinator/tmuxinator
+
+# sudo apt install tmuxinator
