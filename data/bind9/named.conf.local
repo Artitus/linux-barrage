@@ -1,0 +1,17 @@
+// Manage the file logs
+include "/etc/bind/named.conf.log";
+
+// Domain Management example.com
+// ------------------------------
+//  - The server is defined as the master on the domain.
+//  - There are no forwarders for this domain.
+//  - Entries in the domain can be added dynamically 
+//    with the key ns-example-com_rndc-key
+zone " // TODO variable from config" {
+        type master;
+        file "/var/lib/bind/db. // TODO variable from config ";
+};
+zone "// TODO script this to get the correct octals .in-addr.arpa" {
+        type master;
+        file "/var/lib/bind/db. // TODO variable from config .inv";
+};

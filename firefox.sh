@@ -10,7 +10,7 @@ do
         for p in $(cat ./firefox_temp)
         do
             ## Copy file
-            cp ./data/firefox/user.js /home/$u/.mozilla/firefox/$p/
+            cp -f ./data/firefox/user.js /home/$u/.mozilla/firefox/$p/
             log firefox "SUCCESS: $u dir /home/$u/.mozilla/firefox/$p"
 
             ## Ensure touched files have correct perms

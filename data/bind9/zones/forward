@@ -1,0 +1,11 @@
+@       IN      SOA     sid. # TODO variable from config . root. # TODO variable from config . (
+                   2007010401           ; Serial
+                         3600           ; Refresh [1h]
+                          600           ; Retry   [10m]
+                        86400           ; Expire  [1d]
+                          600 )         ; Negative Cache TTL [1h]
+;
+@       IN      NS      sid. # TODO variable from config .
+
+sid     IN      A       # TODO script for correct ip
+etch    IN      A       # TODO script for correct ip
