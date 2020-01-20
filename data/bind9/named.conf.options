@@ -7,7 +7,7 @@ options {
         interface-interval 0;
         // Listen on local interfaces only(IPV4)
         listen-on-v6 { none; };
-        listen-on { // TODO variable that gets replaced from config with local ip??? };
+        listen-on { %%local_ip%%; };
 
         // Do not transfer the zone information to the secondary DNS
         allow-transfer { none; };

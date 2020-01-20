@@ -7,11 +7,11 @@ include "/etc/bind/named.conf.log";
 //  - There are no forwarders for this domain.
 //  - Entries in the domain can be added dynamically 
 //    with the key ns-example-com_rndc-key
-zone " // TODO variable from config" {
+zone "%%zone%%" {
         type master;
-        file "/var/lib/bind/db. // TODO variable from config ";
+        file "/etc/bind/forward";
 };
-zone "// TODO script this to get the correct octals .in-addr.arpa" {
+zone "%%reverse_octal%%.in-addr.arpa" {
         type master;
-        file "/var/lib/bind/db. // TODO variable from config .inv";
+        file "/etc/bind/reverse";
 };

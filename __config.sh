@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# FIX This shit doesn't run on Debian, find out why it errors!!!
+
 # Distribution refers to which version of linux you are on, Ubuntu or Debian
 Distribution=debian
 
@@ -23,3 +25,13 @@ AllowedStandardUsers=(
 declare -A AllowedAdmins=(
 
 ) # Example Entry: ["MyAdmin"]="MyPassword"
+
+
+## Critical Service: bind9
+
+zone="blue.shrek"
+local_ip=
+# Depending on the network may be 2 or 3 octals (First in reverse order)
+reverse_zone_octals=
+# Depending on the network may be 1 or 2 octals (Last)
+octal=

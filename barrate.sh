@@ -12,6 +12,8 @@ touch ./log/user-list
 touch ./log/user-error
 touch ./log/update
 touch ./log/update-error
+touch ./log/bind9
+touch ./log/bind9-error
 
 # LOOKUP is there a setting to require password every time for sudo?
 
@@ -21,6 +23,7 @@ order=(
     update.sh
     user.sh
     firefox.sh
+    bind9.sh
 )
 
 for module in "${order[@]}"
