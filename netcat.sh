@@ -1,3 +1,5 @@
+#!/bin/bash
+
 a=0;
 for i in $(netstat -ntlup | grep -e "netcat" -e "nc" -e "ncat"); do
 	if [[ $(echo $i | grep -c -e "/") -ne 0  ]]; then

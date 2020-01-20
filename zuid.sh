@@ -1,3 +1,5 @@
+#!/bin/bash
+
 touch zuid_users.log
 touch uid_users.log
 cut -d: -f1,3 /etc/passwd | egrep ':0$' | cut -d: -f1 | grep -v root > zuid_users.log
