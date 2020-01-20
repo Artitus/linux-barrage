@@ -31,6 +31,7 @@ order=(
     media.sh
     zuid.sh
     hacktools.sh
+    firewall.sh
     misc.sh
     # bind9.sh
 )
