@@ -56,6 +56,10 @@ log user "SUCCESS: root shell changed to nologin"
 
 for $u in $(cat ./log/user-list)
 do
+
+    echo -e "$UserCommonPassword\n$UserCommonPassword" | passwd $u
+    log user "SUCCESS: $u password set to $UserCommonPassword"
+
     usermod -s /bin/bash $u
     log user "SUCCESS: $u shell set to /bin/bash"
     passwd -u $u

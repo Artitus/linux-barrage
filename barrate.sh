@@ -19,11 +19,17 @@ touch ./log/bind9-error
 
 # LOOKUP http://docs.hardentheworld.org/
 
+# TODO new run system
+
 order=(
     update.sh
+    audit.sh
     user.sh
     firefox.sh
-    bind9.sh
+    media.sh
+    hacktools.sh
+    misc.sh
+    # bind9.sh
 )
 
 for module in "${order[@]}"
