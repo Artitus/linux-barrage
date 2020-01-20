@@ -31,7 +31,6 @@ if [ $Distribution = "debian" ]; then
     # Restart LightDM
     # LOOKUP Any way to do this without the script exiting? The settings take effect upon reboot anyway...
 elif [ $Distribution = "ubuntu" ]; then
-    # FIX Why don't I have a gui...
 
     cp -f ./data/user/lightdm.conf /etc/lightdm/
     log user "SUCCESS: Copied custom lightdm configuration"

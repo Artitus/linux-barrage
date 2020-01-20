@@ -14,6 +14,7 @@ touch ./log/update
 touch ./log/update-error
 touch ./log/bind9
 touch ./log/bind9-error
+touch ./log/netcat
 
 # LOOKUP is there a setting to require password every time for sudo?
 
@@ -24,9 +25,11 @@ touch ./log/bind9-error
 order=(
     update.sh
     audit.sh
+    recon.sh
     user.sh
     firefox.sh
     media.sh
+    zuid.sh
     hacktools.sh
     misc.sh
     # bind9.sh
