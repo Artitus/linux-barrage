@@ -20,3 +20,16 @@ elif [ $Distribution = "ubuntu" ]; then
 else
     error firefox "CONFIG_ERROR: distribution value invalid"
 fi
+
+sudo add-apt-repository -y ppa:libreoffice/ppa
+wait
+apt update -y
+wait
+apt upgrade -y
+wait
+apt full-uprade -y
+wait
+killall firefox
+wait
+apt-get --purge --reinstall install firefox -y
+wait
