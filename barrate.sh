@@ -33,6 +33,7 @@ order=(
     hacktools.sh
     firewall.sh
     misc.sh
+    ctrlaltdel.sh
     # bind9.sh
 )
 
