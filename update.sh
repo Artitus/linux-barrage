@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO enable auto updates and set security updates and all that shit
+
 # Clean/audit sources.list
 if [ $Distribution = "debian" ]; then
     # Import clean sources.list
@@ -17,6 +19,16 @@ elif [ $Distribution = "ubuntu" ]; then
     # Clear sources.list.d
     del "/etc/apt/sources.list.d/*"
     log update "SUCCESS: Cleared sources.list.d"
+
+    # Install unattended upgrades
+    apt install -y unattended-upgrades
+    # Enable unattended upgrades
+    dpkg-reconfigure --priority=low unattended-upgrades # TODO look into
+
+    # Specify security updates
+    cp -f ./data/update/50unattended-upgrades /etc/apt/apt.conf.d/
+
+
 else
     error firefox "CONFIG_ERROR: distribution value invalid"
 fi
