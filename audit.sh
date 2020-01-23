@@ -1,8 +1,7 @@
 #!/bin/bash
 
-apt install auditd
-wait
-systemctl enable auditd
+apt install -y auditd -y
+systemctl enable --now auditd
 
 # Keep All Auditing Information
 egrep -q "^(\s*)max_log_file_action\s*=\s*\S+(\s*#.*)?\s*$" /etc/audit/auditd.conf && sed -ri "s/^(\s*)max_log_file_action\s*=\s*\S+(\s*#.*)?\s*$/\1max_log_file_action = keep_logs\2/" /etc/audit/auditd.conf || echo "max_log_file_action = keep_logs" >> /etc/audit/auditd.conf
@@ -94,3 +93,4 @@ sed -i 's/^#Storage=.*/Storage=persistent/' "/etc/systemd/journald.conf"
 sed -i 's/^#ForwardToSyslog=.*/ForwardToSyslog=yes/' "/etc/systemd/journald.conf"
 sed -i 's/^#Compress=.*/Compress=yes/' "/etc/systemd/journald.conf"
 systemctl restart systemd-journald
+systemctl restart auditd

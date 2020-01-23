@@ -22,28 +22,56 @@ touch ./log/netcat
 # TODO new run system
 
 order=(
+    recon.sh
+    backup.sh
     update.sh
     audit.sh
-    recon.sh
-    user.sh
-    firefox.sh
-    media.sh
-    zuid.sh
-    hacktools.sh
-    firewall.sh
-    misc.sh
+    apache.sh
+    bind9.sh
     ctrlaltdel.sh
-    # bind9.sh
+    firefox.sh
+    firewall.sh
+    hacktools.sh
+    media.sh
+    sysctl.sh
+    mysql.sh
+    netcat.sh
+    php.sh
+    ssh.sh
+    user.sh
+    passwords.sh
+    zuid.sh
+    misc.sh
+    antivirus.sh
+    apparmor.sh
 )
 
-for module in "${order[@]}"
-do
-    . $module
-done
+# Run the script
+echo '2020 Cy-Fair CyberPatriot A-Team Linux Script'
+pause
+echo "Proceeding"
+echo "--- Checking sudo access to run"
+if [ "$EUID" -ne 0 ]
+then
+    echo "Please run with sudo"
+    exit 1
+else
+    if ! $Configured ; then
+        echo "Please configure the script."
+        exit 1
+    else
+        for module in "${order[@]}"
+        do
+            . $module
+        done
+    fi
+fi
+
+
 
 
 #
 # * Test out tmuxinator for running scripts in paralell because that would be cool as fuck
 # ** https://github.com/tmuxinator/tmuxinator
 
-# sudo apt install tmuxinator
+# sudo apt install -y tmuxinator

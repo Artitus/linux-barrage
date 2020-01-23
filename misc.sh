@@ -1,5 +1,11 @@
 #!/bin/bash
 
+del /etc/sysctl.conf
+cp -f ./data/sysctl/sysctl.conf /etc/sysctl.conf
+
+unalias -a
+dpkg-statoverride --update --add root sudo 4750 /bin/su
+
 # Disable IP Forwarding
 egrep -q "^(\s*)net.ipv4.ip_forward\s*=\s*\S+(\s*#.*)?\s*$" /etc/sysctl.conf && sed -ri "s/^(\s*)net.ipv4.ip_forward\s*=\s*\S+(\s*#.*)?\s*$/\1net.ipv4.ip_forward = 0\2/" /etc/sysctl.conf || echo "net.ipv4.ip_forward = 0" >> /etc/sysctl.conf
 
@@ -101,14 +107,14 @@ echo root > at.allow
 
 # Disable System Accounts
 for user in `awk -F: '($3 < 1000) {print $1 }' /etc/passwd`; do
-    if [ $user != "root" ]
-    then
-    /usr/sbin/usermod -L $user 
-    if [ $user != "sync" ] && [ $user != "shutdown" ] && [ $user != "halt" ]
-    then
-        /usr/sbin/usermod -s /usr/sbin/nologin $user 
-    fi
-    fi
+if [ $user != "root" ]
+then
+/usr/sbin/usermod -L $user 
+if [ $user != "sync" ] && [ $user != "shutdown" ] && [ $user != "halt" ]
+then
+    /usr/sbin/usermod -s /usr/sbin/nologin $user 
+fi
+fi
 done
 
 # Disable login for root user
@@ -164,3 +170,98 @@ sed -ri '/^\+:.*$/ d' /etc/group
 chmod 640 .bash_history 
 
 find /bin/ -name "*.sh" -type f -delete
+
+# Set nodev option for /tmp Partition
+egrep -q "^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/tmp\2nodev\3\4/" /etc/fstab
+
+# Set nosuid option for /tmp Partition
+egrep -q "^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/tmp\2nosuid\3\4/" /etc/fstab
+
+egrep -q "^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/tmp(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/tmp\2noexec\3\4/" /etc/fstab
+
+# Add nodev Option to /home
+egrep -q "^(\s*\S+\s+)/home(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/home(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/home\2nodev\3\4/" /etc/fstab
+
+# Add nodev Option to /run/shm Partition
+egrep -q "^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/run/shm\2nodev\3\4/" /etc/fstab
+
+# Add nosuid Option to /run/shm Partition
+egrep -q "^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/run/shm\2nosuid\3\4/" /etc/fstab
+
+# Add noexec Option to /run/shm Partition
+egrep -q "^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$" /etc/fstab && sed -ri "s/^(\s*\S+\s+)/run/shm(\s+\S+\s+\S+)(\s+\S+\s+\S+)(\s*#.*)?\s*$/\1/run/shm\2noexec\3\4/" /etc/fstab
+
+# Restrict Core Dumps
+egrep -q "^(\s*)\*\s+hard\s+core\s+\S+(\s*#.*)?\s*$" /etc/security/limits.conf && sed -ri "s/^(\s*)\*\s+hard\s+core\s+\S+(\s*#.*)?\s*$/\1* hard core 0\2/" /etc/security/limits.conf || echo "* hard core 0" >> /etc/security/limits.conf
+egrep -q "^(\s*)fs.suid_dumpable\s*=\s*\S+(\s*#.*)?\s*$" /etc/sysctl.conf && sed -ri "s/^(\s*)fs.suid_dumpable\s*=\s*\S+(\s*#.*)?\s*$/\1fs.suid_dumpable = 0\2/" /etc/sysctl.conf || echo "fs.suid_dumpable = 0" >> /etc/sysctl.conf
+
+# Enable Randomized Virtual Memory Region Placement
+egrep -q "^(\s*)kernel.randomize_va_space\s*=\s*\S+(\s*#.*)?\s*$" /etc/sysctl.conf && sed -ri "s/^(\s*)kernel.randomize_va_space\s*=\s*\S+(\s*#.*)?\s*$/\1kernel.randomize_va_space = 2\2/" /etc/sysctl.conf || echo "kernel.randomize_va_space = 2" >> /etc/sysctl.conf
+
+# Disable Prelink
+dpkg -s prelink && apt-get -y purge prelink
+
+# Disable Automounting
+update-rc.d autofs disable
+
+# Set Permissions on bootloader config
+chmod g-r-w-x,o-r-w-x /boot/grub/grub.cfg
+
+echo 'exit 0' > /etc/rc.local
+
+chmod a-w /etc/sysctl.conf
+rm -rf /usr/games/ 
+rm -rf /usr/local/games 
+
+echo "ALL: LOCAL, 127.0.0.1" >> /etc/hosts.allow
+echo "ALL: PARANOID" > /etc/hosts.deny
+
+sed -i 's/PATH=.*/PATH=\"\/usr\/local\/bin:\/usr\/bin:\/bin"/' /etc/environment
+cp ./resources/initpath.sh /etc/profile.d/initpath.sh 
+
+chown root:root /etc/profile.d/initpath.sh 
+chmod 0644 /etc/profile.d/initpath.sh 
+
+for users in games gnats irc list news uucp; do
+    userdel -r "$users" 
+done
+
+if [ -f /etc/init.d/rc ]; then
+    sed -i 's/umask 022/umask 027/g' /etc/init.d/rc
+fi
+
+if ! grep -q -i "umask" "/etc/profile" ; then
+    echo "umask 027" >> /etc/profile
+fi
+
+if ! grep -q -i "umask" "/etc/bash.bashrc" ; then
+    echo "umask 027" >> /etc/bash.bashrc
+fi
+
+if ! grep -q -i "TMOUT" "/etc/profile.d/*" ; then
+    echo -e 'TMOUT=900\nreadonly TMOUT\nexport TMOUT' > '/etc/profile.d/autologout.sh'
+    chmod +x /etc/profile.d/autologout.sh 
+fi
+
+local TEXT
+
+for f in /etc/issue /etc/issue.net /etc/motd; do
+    TEXT="\\nwarning : No scrubs from CyPat Discord... Not gonna name any names but uh *cough* lighthouse64 *cough*\\n"
+    if [ -f $f ]; then
+        echo -e "$TEXT" > $f
+    fi
+done
+
+sed -i 's/ENABLED=.*/ENABLED=0/' /etc/default/motd-news
+systemctl disable motd-news.timer 
+
+if [ -f /etc/cups/cupsd.conf ]; then
+    chmod 644 /etc/cups/cupsd.conf 
+fi
+
+##Sets default broswer
+sed -i 's/x-scheme-handler\/http=.*/x-scheme-handler\/http=firefox.desktop/g' /home/$UserName/.local/share/applications/mimeapps.list
+
+gsettings set org.gnome.desktop.session idle-delay 900 
+gsettings set org.gnome.desktop.screensaver lock-delay 0 
+gsettings set org.gnome.desktop.screensaver lock-enabled true 

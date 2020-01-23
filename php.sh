@@ -1,5 +1,8 @@
 #!/bin/bash
 if $cs_php ; then
+
+    apt install -y php libapache2-mod-php php-mysql
+
     if [ $Distribution = "debian" ]; then
     del /etc/php5/apache2/php.ini
     cp -f ./data/php/debian_php.ini /etc/php5/apache2/php.ini

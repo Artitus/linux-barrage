@@ -1,5 +1,10 @@
 #!/bin/bash
 if $cs_mysql ; then
+
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password password password'
+    debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password password'
+    apt -y install mysql-server
+
     if [ $Distribution = "debian" ]; then
         del /etc/mysql/my.cnf
         cp -f ./data/mysql/debian_my.cnf /etc/mysql/my.cnf

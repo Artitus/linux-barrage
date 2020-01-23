@@ -16,7 +16,7 @@ then
 				break
 			fi
 		done
-		usermod -u $rand -g $rand -o $line 2>&1 > /dev/null
+		usermod -u $rand -g $rand -o $line 
 		touch /tmp/oldstring
 		old=$(grep "$line" /etc/passwd)
 		echo $old > /tmp/oldstring

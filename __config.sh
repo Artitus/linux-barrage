@@ -5,6 +5,9 @@
 # Distribution refers to which version of linux you are on, Ubuntu or Debian
 Distribution=debian
 
+# Did you finish the config?
+Configured=false
+
 ## Critical Services (true/false)
 cs_apache=false
 cs_bind9=false
@@ -14,6 +17,9 @@ cs_samba=false
 cs_ssh=false
 
 ## User Options
+
+# Main user (The user that you started as)
+UserName=
 
 # Default password for all users that do not have a password override
 UserCommonPassword="B4rr4t3dUs3r-5229"

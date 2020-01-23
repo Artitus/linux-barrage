@@ -187,7 +187,7 @@ media() {
 	touch ./recon/hacks.log
 	dpkg -l | egrep "crack|hack" >> ./recon/hacks.log
 
-	ls -laR / 2> /dev/null | grep rwxrwxrwx | grep -v "lrwx" &> ./recon/bad_files.log
+	ls -laR /  | grep rwxrwxrwx | grep -v "lrwx" &> ./recon/bad_files.log
 
 	touch ./recon/hidden_files.log
 	find / -name ".*" -print0 >> ./recon/hidden_files.log
