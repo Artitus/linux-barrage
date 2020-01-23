@@ -5,6 +5,14 @@
 # Distribution refers to which version of linux you are on, Ubuntu or Debian
 Distribution=debian
 
+## Critical Services (true/false)
+cs_apache=false
+cs_bind9=false
+cs_mysql=false
+cs_php=false
+cs_samba=false
+cs_ssh=false
+
 ## User Options
 
 # Default password for all users that do not have a password override
@@ -25,7 +33,6 @@ AllowedStandardUsers=(
 declare -A AllowedAdmins=(
 
 ) # Example Entry: ["MyAdmin"]="MyPassword"
-
 
 ## Critical Service: bind9
 

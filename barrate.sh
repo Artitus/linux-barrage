@@ -17,7 +17,6 @@ touch ./log/bind9-error
 touch ./log/netcat
 
 # LOOKUP is there a setting to require password every time for sudo?
-
 # LOOKUP http://docs.hardentheworld.org/
 
 # TODO new run system
