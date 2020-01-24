@@ -16,31 +16,15 @@ if [ $Distribution = "debian" ]; then
     else
         log user "INFO: /etc/lightdm/ did not eixst"
     fi
-    if [ -d "/etc/lightdm/lightdm.conf.d/" ]; then
-        del "/etc/lightdm/lightdm.conf.d/"
-        log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
-    else
-        log user "INFO: /etc/lightdm/lightdm.conf.d/ did not eixst"
-    fi
-    if [ -d "/usr/share/lightdm/lightdm.conf.d/" ]; then
-        del "/usr/share/lightdm/lightdm.conf.d/"
-        log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
-    else
-        log user "INFO: /usr/share/lightdm/ did not eixst"
-    fi
     # Restart LightDM
     # LOOKUP Any way to do this without the script exiting? The settings take effect upon reboot anyway...
 elif [ $Distribution = "ubuntu" ]; then
-
-    cp -rf ./data/user/lightdm.conf /etc/lightdm/
-    log user "SUCCESS: Copied custom lightdm configuration"
-    if [ -d "/etc/lightdm/lightdm.conf.d/" ]; then
-        del "/etc/lightdm/lightdm.conf.d/"
-        log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
-    fi
-    if [ -d "/usr/share/lightdm/lightdm.conf.d/" ]; then
-        del "/usr/share/lightdm/lightdm.conf.d/"
-        log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
+    # Check if lightdm dir exists
+    if [ -d "/etc/lightdm/" ]; then
+        cp -rf ./data/user/lightdm.conf /etc/lightdm/
+        log user "SUCCESS: Copied custom lightdm configuration"
+    else
+        log user "INFO: /etc/lightdm/ did not eixst"
     fi
     # Restart LightDM ## See above
 else
@@ -50,6 +34,7 @@ fi
 # TODO test
 # Ensure cracklib is installed
 apt -y install libpam-cracklib
+wait
 
 # Disallow root
 passwd -l root

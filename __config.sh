@@ -20,7 +20,7 @@ cs_ssh=false
 UserName=
 
 # Default password for all users that do not have a password override
-UserCommonPassword="B4rr4t3dUs3r-5229"
+UserCommonPassword="B4rr4t3dUs3r-5299"
 
 # Should the script clear the users' home directories
 ClearHomeDirectories=true
