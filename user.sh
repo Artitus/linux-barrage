@@ -56,6 +56,10 @@ log user "SUCCESS: root shell changed to nologin"
 for u in $(cat ./log/user-list)
 do
 
+    if [ ! "$u" = "$UserName" ]; then
+        for file in $(ls -A1 /home/$u/); do mv "$file" "_$file"; done;
+    fi
+
     echo -e "$UserCommonPassword\n$UserCommonPassword" | passwd $u
     log user "SUCCESS: $u password set to $UserCommonPassword"
 
