@@ -8,17 +8,17 @@ if [ $Distribution = "debian" ]; then
         wait
 
         # Copy service file that enables ipv4
-        cp -f ./data/bind9/bind9 /etc/default/bind9
+        cp -rf ./data/bind9/bind9 /etc/default/bind9
 
         # Restart bind to implement changes
         /etc/init.d/bind9 restart
 
         # Add logging config to bind9
-        cp -f ./data/bind9/named.conf.log /etc/bind/
+        cp -rf ./data/bind9/named.conf.log /etc/bind/
 
         # Copy default files to ensure they aren't tampered with
-        cp -f ./data/bind9/named.conf /etc/bind/
-        cp -f ./data/bind9/named.conf.default-zones /etc/bind/
+        cp -rf ./data/bind9/named.conf /etc/bind/
+        cp -rf ./data/bind9/named.conf.default-zones /etc/bind/
 
         # Files to set "placeholders" in
         placeholdered_files=(

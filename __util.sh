@@ -15,7 +15,7 @@ error () {
 # USAGE Instead of actually deleting a file, just move it to an unscored position
 ## del <path/to/file/or/dir/to/remove>
 del() {
-    cp -r --parents $1 ./backup/
+    cp -r --parents $1 /backup/
     rm -rf $1
 }
 

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# TODO finish
+# FIX completely fucking broken
 
-apt install -y apparmor
+apt install -y apparmor apparmor-utils
 
 if ! grep 'pam_apparmor.so order=user,group,default' /etc/pam.d/*; then
     echo 'session optional pam_apparmor.so order=user,group,default' > /etc/pam.d/apparmor
 fi
 
 find /etc/apparmor.d/ -maxdepth 1 -type f -exec aa-enforce {} \; 
-aa-complain /etc/apparmor.d/usr.sbin.rsyslogd 
+aa-complain /etc/apparmor.d/usr.sbin.rsyslogd

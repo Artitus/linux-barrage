@@ -49,58 +49,61 @@ for x in ${packages_that_gotta_go[*]}; do
     apt purge $x -y
 done
 
-# Ensure NIS is not installed
-dpkg -s nis && apt-get -y purge nis 
-wait
-# Ensure rsh server is not enabled
-sed -ri "s/^shell/#shell/" /etc/inetd.conf
-sed -ri "s/^login/#login/" /etc/inetd.conf
-sed -ri "s/^exec/#exec/" /etc/inetd.conf
 
-# Ensure rsh client is not installed
-dpkg -s rsh-client && apt-get -y remove rsh-client 
-wait
-dpkg -s rsh-redone-client && apt-get -y remove rsh-redone-client 
-wait
-# Ensure talk server is not enabled
-sed -ri "s/^talk/#talk/" /etc/inetd.conf
-sed -ri "s/^ntalk/#ntalk/" /etc/inetd.conf
 
-# Ensure talk client is not installed
-dpkg -s talk && apt-get -y remove talk 
-wait
-# Ensure telnet server is not enabled
-sed -ri "s/^telnet/#telnet/" /etc/inetd.conf
 
-# Ensure tftp-server is not enabled
-if [ $cp_tftpd = 0 ];
-then
+
+# LOOKUP Debian only?? 
+
+if [ $Distribution = "debian" ]; then
+
+    # Ensure chargen is not enabled
+    sed -ri "s/^chargen/#chargen/" /etc/inetd.conf
+
+    # Ensure daytime is not enabled
+    sed -ri "s/^daytime/#daytime/" /etc/inetd.conf
+
+    # Ensure echo is not enabled
+    sed -ri "s/^echo/#echo/" /etc/inetd.conf
+
+    # Ensure discard is not enabled
+    sed -ri "s/^discard/#discard/" /etc/inetd.conf
+
+    # Ensure time is not enabled
+    sed -ri "s/^time/#time/" /etc/inetd.conf
+
+    # Ensure NIS is not installed
+    dpkg -s nis && apt-get -y purge nis 
+    wait
+    # Ensure rsh server is not enabled
+    sed -ri "s/^shell/#shell/" /etc/inetd.conf
+    sed -ri "s/^login/#login/" /etc/inetd.conf
+    sed -ri "s/^exec/#exec/" /etc/inetd.conf
+
+    # Ensure rsh client is not installed
+    dpkg -s rsh-client && apt-get -y remove rsh-client 
+    wait
+    dpkg -s rsh-redone-client && apt-get -y remove rsh-redone-client 
+    wait
+    # Ensure talk server is not enabled
+    sed -ri "s/^talk/#talk/" /etc/inetd.conf
+    sed -ri "s/^ntalk/#ntalk/" /etc/inetd.conf
+
+    # Ensure talk client is not installed
+    dpkg -s talk && apt-get -y remove talk 
+    wait
+    # Ensure telnet server is not enabled
+    sed -ri "s/^telnet/#telnet/" /etc/inetd.conf
+
+    # Ensure tftp-server is not enabled
     sed -ri "s/^tftp/#tftp/" /etc/inetd.conf
-fi
 
-# Ensure xinetd is not enabled
-if [ $cp_xinetd = 0 ];
-then
+    # Ensure xinetd is not enabled
     update-rc.d xinetd disable
 fi
 
-# Ensure chargen is not enabled
-sed -ri "s/^chargen/#chargen/" /etc/inetd.conf
-
-# Ensure daytime is not enabled
-sed -ri "s/^daytime/#daytime/" /etc/inetd.conf
-
-# Ensure echo is not enabled
-sed -ri "s/^echo/#echo/" /etc/inetd.conf
-
-# Ensure discard is not enabled
-sed -ri "s/^discard/#discard/" /etc/inetd.conf
-
-# Ensure time is not enabled
-sed -ri "s/^time/#time/" /etc/inetd.conf
-
 # Ensure DHCP Server is not enabled
-update-rc.d isc-dhcp-server disable 
+update-rc.d isc-dhcp-server disable
 
 # Configure Network Time Protocol (NTP)
 dpkg -s ntp || apt-get -y install ntp 
@@ -112,6 +115,3 @@ egrep -q "^(\s*)OPTIONS\s*=\s*\"(([^\"]+)?-u\s[^[:space:]\"]+([^\"]+)?|([^\"]+))
 # Ensure LDAP is not enabled
 dpkg -s slapd && apt-get -y purge slapd 
 wait
-# Ensure rsync service is not enabled
-
-dpkg -s rsync && sed -ri "s/^(\s*RSYNC_ENABLE\s*=\s*)\S+(\s*)/\1false\2/" /etc/default/rsync

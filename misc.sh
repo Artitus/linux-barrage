@@ -1,7 +1,7 @@
 #!/bin/bash
 
 del /etc/sysctl.conf
-cp -f ./data/sysctl/sysctl.conf /etc/sysctl.conf
+cp -rf ./data/sysctl/sysctl.conf /etc/sysctl.conf
 
 unalias -a
 dpkg-statoverride --update --add root sudo 4750 /bin/su
@@ -98,12 +98,11 @@ chown 0:0 /etc/at.allow
 sed -i 's/^#cron./cron./' /etc/rsyslog.d/50-default.conf
 
 crontab -r 
-cd /etc/ 
 /bin/rm -f cron.deny at.deny 
-echo root > cron.allow
-echo root > at.allow
-/bin/chown root:root cron.allow at.allow 
-/bin/chmod 644 cron.allow at.allow 
+echo root > /etc/cron.allow
+echo root > /etc/at.allow
+/bin/chown root:root /etc/cron.allow /etc/at.allow 
+/bin/chmod 644 /etc/cron.allow /etc/at.allow 
 
 # Disable System Accounts
 for user in `awk -F: '($3 < 1000) {print $1 }' /etc/passwd`; do
@@ -125,7 +124,8 @@ usermod -g 0 root
 
 # Set Default umask for Users
 egrep -q "^(\s*)umask\s+\S+(\s*#.*)?\s*$" /etc/bash.bashrc && sed -ri "s/^(\s*)umask\s+\S+(\s*#.*)?\s*$/\1umask 077\2/" /etc/bash.bashrc || echo "umask 077" >> /etc/bash.bashrc
-egrep -q "^(\s*)umask\s+\S+(\s*#.*)?\s*$" /etc/profile.d/cis.sh && sed -ri "s/^(\s*)umask\s+\S+(\s*#.*)?\s*$/\1umask 077\2/" /etc/profile.d/cis.sh || echo "umask 077" >> /etc/profile.d/cis.sh
+
+touch /etc/motd
 
 # Set Warning Banner for Standard Login Services
 chmod u+r+w-x,g+r-w-x,o+r-w-x /etc/motd 
@@ -166,8 +166,6 @@ sed -ri '/^\+:.*$/ d' /etc/shadow
 
 # Verify No Legacy &quot;+&quot; Entries Exist in /etc/group File
 sed -ri '/^\+:.*$/ d' /etc/group
-
-chmod 640 .bash_history 
 
 find /bin/ -name "*.sh" -type f -delete
 
@@ -217,10 +215,6 @@ echo "ALL: LOCAL, 127.0.0.1" >> /etc/hosts.allow
 echo "ALL: PARANOID" > /etc/hosts.deny
 
 sed -i 's/PATH=.*/PATH=\"\/usr\/local\/bin:\/usr\/bin:\/bin"/' /etc/environment
-cp ./resources/initpath.sh /etc/profile.d/initpath.sh 
-
-chown root:root /etc/profile.d/initpath.sh 
-chmod 0644 /etc/profile.d/initpath.sh 
 
 for users in games gnats irc list news uucp; do
     userdel -r "$users" 
@@ -243,12 +237,9 @@ if ! grep -q -i "TMOUT" "/etc/profile.d/*" ; then
     chmod +x /etc/profile.d/autologout.sh 
 fi
 
-local TEXT
-
 for f in /etc/issue /etc/issue.net /etc/motd; do
-    TEXT="\\nwarning : No scrubs from CyPat Discord... Not gonna name any names but uh *cough* lighthouse64 *cough*\\n"
     if [ -f $f ]; then
-        echo -e "$TEXT" > $f
+        echo -e "\\nwarning : No scrubs from CyPat Discord... Not gonna name any names but uh *cough* lighthouse64 *cough*\\n" > $f
     fi
 done
 
@@ -260,7 +251,7 @@ if [ -f /etc/cups/cupsd.conf ]; then
 fi
 
 ##Sets default broswer
-sed -i 's/x-scheme-handler\/http=.*/x-scheme-handler\/http=firefox.desktop/g' /home/$UserName/.local/share/applications/mimeapps.list
+update-alternatives --set x-www-browser /usr/bin/firefox
 
 gsettings set org.gnome.desktop.session idle-delay 900 
 gsettings set org.gnome.desktop.screensaver lock-delay 0 

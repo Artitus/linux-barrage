@@ -3,6 +3,8 @@
 source ./__config.sh
 source ./__util.sh
 
+mkdir /backup/
+
 # Create all the log files
 touch ./log/master
 touch ./log/firefox
@@ -33,11 +35,11 @@ order=(
     firewall.sh
     hacktools.sh
     media.sh
-    sysctl.sh
     mysql.sh
     netcat.sh
     php.sh
     ssh.sh
+    samba.sh
     user.sh
     passwords.sh
     zuid.sh
@@ -48,7 +50,6 @@ order=(
 
 # Run the script
 echo '2020 Cy-Fair CyberPatriot A-Team Linux Script'
-pause
 echo "Proceeding"
 echo "--- Checking sudo access to run"
 if [ "$EUID" -ne 0 ]
@@ -67,8 +68,8 @@ else
     fi
 fi
 
-
-
+apt update
+apt full-upgrade -y
 
 #
 # * Test out tmuxinator for running scripts in paralell because that would be cool as fuck

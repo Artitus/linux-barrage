@@ -11,18 +11,18 @@ cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 >> ./log/user-list
 if [ $Distribution = "debian" ]; then
     # Check if lightdm dir exists
     if [ -d "/etc/lightdm/" ]; then
-        cp -f ./data/user/lightdm.conf /etc/lightdm/
+        cp -rf ./data/user/lightdm.conf /etc/lightdm/
         log user "SUCCESS: Copied custom lightdm configuration"
     else
         log user "INFO: /etc/lightdm/ did not eixst"
     fi
-    if [ -d "/etc/lightdm/lightdm.conf.d/"]; then
+    if [ -d "/etc/lightdm/lightdm.conf.d/" ]; then
         del "/etc/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
     else
         log user "INFO: /etc/lightdm/lightdm.conf.d/ did not eixst"
     fi
-    if [ -d "/usr/share/lightdm/lightdm.conf.d/"]; then
+    if [ -d "/usr/share/lightdm/lightdm.conf.d/" ]; then
         del "/usr/share/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
     else
@@ -32,13 +32,13 @@ if [ $Distribution = "debian" ]; then
     # LOOKUP Any way to do this without the script exiting? The settings take effect upon reboot anyway...
 elif [ $Distribution = "ubuntu" ]; then
 
-    cp -f ./data/user/lightdm.conf /etc/lightdm/
+    cp -rf ./data/user/lightdm.conf /etc/lightdm/
     log user "SUCCESS: Copied custom lightdm configuration"
-    if [ -d "/etc/lightdm/lightdm.conf.d/"]; then
+    if [ -d "/etc/lightdm/lightdm.conf.d/" ]; then
         del "/etc/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /etc/lightdm/lightdm.conf.d/ dir"
     fi
-    if [ -d "/usr/share/lightdm/lightdm.conf.d/"]; then
+    if [ -d "/usr/share/lightdm/lightdm.conf.d/" ]; then
         del "/usr/share/lightdm/lightdm.conf.d/"
         log user "SUCCESS: removed /usr/share/lightdm/lightdm.conf.d dir"
     fi
@@ -53,7 +53,7 @@ log user "SUCCESS: root locked"
 usermod -s /sbin/nologin root
 log user "SUCCESS: root shell changed to nologin"
 
-for $u in $(cat ./log/user-list)
+for u in $(cat ./log/user-list)
 do
 
     echo -e "$UserCommonPassword\n$UserCommonPassword" | passwd $u
@@ -72,6 +72,9 @@ do
     log user "SUCCESS: $u password expiration set"
     passwd --expire $u
     log user "SUCCESS: $u password required to be changed at next login"
+
+    chmod 640 /home/$u/.bash_history
+
 done
 
 # Harden sudoers

@@ -4,7 +4,7 @@ apt install -y clamav clamav-daemon rkhunter chkrootkit unhide
 
 cat ./data/antivirus/clam* > ./data/antivirus/clam.tar.xz
 tar xf ./data/antivirus/clam.tar.xz -C ./data/antivirus/
-cp -f ./data/antivirus/*.cvd /var/lib/clamav/
+cp -rf ./data/antivirus/*.cvd /var/lib/clamav/
 chown clamav:clamav /var/lib/clamav/*.cvd
 chmod 644 /var/lib/clamav/*.cvd
 

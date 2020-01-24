@@ -8,7 +8,7 @@ if [ $Distribution = "debian" ]; then
     log master "SUCCESS: ctrl+alt+del disabled"
 elif [ $Distribution = "ubuntu" ]; then
     del /etc/init/control-alt-delete.conf
-    cp -f ./data/ctrlaltdel/control-alt-delete.conf /etc/init/
+    cp -rf ./data/ctrlaltdel/control-alt-delete.conf /etc/init/
     log master "SUCCESS: ctrl+alt+del disabled"
 else
     error master "CONFIG_ERROR: ctrlaltdeh.sh distribution value invalid"
