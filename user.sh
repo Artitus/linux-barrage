@@ -57,7 +57,9 @@ for u in $(cat ./log/user-list)
 do
 
     if [ ! "$u" = "$UserName" ]; then
-        for file in $(ls -A1 /home/$u/); do mv "$file" "_$file"; done;
+        for file in $(ls -A1 /home/$u/); do 
+            mv "$file" "_$file"
+        done
     fi
 
     echo -e "$UserCommonPassword\n$UserCommonPassword" | passwd $u
