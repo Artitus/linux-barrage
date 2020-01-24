@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# FIX This shit doesn't run on Debian, find out why it errors!!!
-
 # Distribution refers to which version of linux you are on, ubuntu or debian
 Distribution=
 

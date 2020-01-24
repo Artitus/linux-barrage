@@ -47,6 +47,10 @@ else
     error user "CONFIG_ERROR: distribution value invalid"
 fi
 
+# TODO test
+# Ensure cracklib is installed
+apt -y install libpam-cracklib
+
 # Disallow root
 passwd -l root
 log user "SUCCESS: root locked"

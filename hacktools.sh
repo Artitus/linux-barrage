@@ -49,12 +49,6 @@ for x in ${packages_that_gotta_go[*]}; do
     apt purge $x -y
 done
 
-
-
-
-
-# LOOKUP Debian only?? 
-
 if [ $Distribution = "debian" ]; then
 
     # Ensure chargen is not enabled

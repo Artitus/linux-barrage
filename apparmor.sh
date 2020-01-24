@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# FIX completely fucking broken
-
 apt install -y apparmor apparmor-utils
 
 if ! grep 'pam_apparmor.so order=user,group,default' /etc/pam.d/*; then

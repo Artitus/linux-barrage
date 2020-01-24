@@ -12,7 +12,7 @@ rkhunter --update
 rkhunter --popupd
 
 # Run
-clamscan --log=./log/clamscan
-rkhunter --check
+rkhunter --check --sk
 chkrootkit
+clamscan --log=./log/clamscan
 unhide -f brute proc procall procfs quick reverse sys
