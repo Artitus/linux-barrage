@@ -4,7 +4,7 @@
 
 cut -d: -f1,3 /etc/passwd | egrep ':[0-9]{4}$' | cut -d: -f1 >> ./log/user-list
 
-# TODO If have time automate users ??? Probably not.
+# TONOT If have time automate users ??? Probably not.
 
 
 # Disallow guest
@@ -64,7 +64,7 @@ do
     passwd -u $u
     log user "SUCCESS: $u unlocked"
 
-    # TODO Groups
+    # TONOT Groups
 
     chmod 750 /home/$u/
     log user "SUCCESS: $u home dir perms set to 750"
