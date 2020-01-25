@@ -240,7 +240,7 @@ media() {
 		#Then for each file, pipe into xargs to remove!
 		while IFS= read -r -d $'\0' file; do
 			echo $file >> ./recon/bad_files.log
-		done < <(find / -type f -name *.$x -print0)
+		done < <(find / -type f \( -path /run -o -path /proc \) -prune -o -name *$x -print0)
 	done
 
 	cp_bad_perms=(
@@ -313,7 +313,8 @@ media() {
 	for x in ${cp_bad_perms[*]}; do
 		while IFS= read -r -d '' file; do
 			echo $file >> ./recon/bad_files.log
-		done < <(find / -type f -perm $x -print0)
+		done < <(find / -type f \( -path /run -o -path /proc \) -prune -o -perm $x -print0)
+		
 	done
 
 	touch ./recon/hacks.log
